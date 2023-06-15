@@ -1,5 +1,6 @@
 const User = require('../../models/User')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const postSignup = async (req, res) => {
 	try {
@@ -23,16 +24,26 @@ const postSignup = async (req, res) => {
 		})
 
 		// Create JWT token
-		const token = 'aadasda'
+		const token = jwt.sign(
+			{
+				userId: user._id,
+				email,
+			},
+			process.env.TOKEN_KEY,
+			{
+				expiresIn: '24h',
+			}
+		)
 
 		res.status(201).json({
 			userDetails: {
-				username: user.username,
-				email: user.email,
+				username,
+				email,
 				token,
 			},
 		})
 	} catch (error) {
+		console.log(error)
 		return res.status(500).send('Error occurred, please try again')
 	}
 }
