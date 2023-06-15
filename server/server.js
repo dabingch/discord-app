@@ -11,6 +11,16 @@ app.use(express.json())
 app.use(cors())
 
 const server = http.createServer(app)
-server.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`)
-})
+
+mongoose
+	.connect(process.env.MONGO_URI)
+	.then(() => {
+		console.log('Database connection successful')
+		server.listen(PORT, () => {
+			console.log(`Server is running on port ${PORT}`)
+		})
+	})
+	.catch((err) => {
+		console.log('Database connection failed, server not started')
+		console.error(err)
+	})
