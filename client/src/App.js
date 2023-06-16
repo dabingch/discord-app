@@ -5,9 +5,9 @@ import {
 	Routes,
 	Navigate,
 } from 'react-router-dom'
-import SigninPage from './authPages/SigninPage/SigninPage'
-import SignupPage from './authPages/SignupPage/SignupPage'
-import Dashboard from './Dashboard/Dashboard'
+import SigninPage from './pages/authPages/SigninPage/SigninPage'
+import SignupPage from './pages/authPages/SignupPage/SignupPage'
+import Dashboard from './pages/Dashboard/Dashboard'
 import './App.css'
 
 function App() {
@@ -15,18 +15,13 @@ function App() {
 		<>
 			<Router>
 				<Routes>
-					<Route exact path='/signin'>
-						<SigninPage />
-					</Route>
-					<Route exact path='/signup'>
-						<SignupPage />
-					</Route>
-					<Route exact path='/dashboard'>
-						<Dashboard />
-					</Route>
-					<Route path='/'>
-						<Navigate to='/dashboard' />
-					</Route>
+					<Route path='/signin' element={<SigninPage />} />
+
+					<Route path='/signup' element={<SignupPage />} />
+
+					<Route path='/dashboard' element={<Dashboard />} />
+
+					<Route path='/' element={<Navigate to='/dashboard' />} />
 				</Routes>
 			</Router>
 		</>
